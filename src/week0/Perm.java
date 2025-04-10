@@ -27,12 +27,12 @@ public class Perm {
             if(!visited[i]){
                 visited[i]=true;
                 current.add(nums[i]);
+
+                makePerm(nums,visited,current);
+
+                visited[i]=false;
+                current.remove(current.size() - 1);
             }
-
-            makePerm(nums,visited,current);
-
-            visited[i]=false;
-            current.remove(current.size() - 1);
         }
     }
 }
