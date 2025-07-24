@@ -5,34 +5,31 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Perm {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        List<Integer> nums = new ArrayList<>();
+        List<List<Integer>> answer = new ArrayList<>();
 
-        int n = scanner.nextInt();
+        while(true){
+            String line = sc.nextLine().trim();
+            if(line.isEmpty()) break;
 
-        int[] nums = new int[n];
-        boolean[] visited = new boolean[n];
-        List<Integer> current = new ArrayList<>();
-
-        for(int i=0;i<n;i++)nums[i]=i;
-        makePerm(nums,visited,current);
+            nums.add(Integer.parseInt(line));
+        }
+        int r = sc.nextInt();
+        solve(nums,0,r,new ArrayList(),answer);
+        for(List<Integer> res : answer)System.out.println(res);
     }
-    static void makePerm(int[] nums, boolean[] visited,List<Integer> current){
-        if(current.size()==nums.length){
-            System.out.println(current);
+    public static void solve(List<Integer>nums,int start,int r,List<Integer>temp,List<List<Integer>> answer){
+        if(r==0){
+            answer.add(new ArrayList(temp));
             return;
         }
 
-        for(int i=0;i<nums.length;i++){
-            if(!visited[i]){
-                visited[i]=true;
-                current.add(nums[i]);
-
-                makePerm(nums,visited,current);
-
-                visited[i]=false;
-                current.remove(current.size() - 1);
-            }
+        for(int i=0;i<nums.size();i++){
+            temp.add(nums.get(i));
+            solve(nums,start,r-1,temp,answer);
+            temp.remove(nums.get(i));
         }
     }
 }
